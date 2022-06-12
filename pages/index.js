@@ -135,8 +135,8 @@ export const getStaticProps = async () => {
             id: item._id.toString(),
           };
         }),
-        revalidate: 10,
       },
+      revalidate: 10,
     };
   } catch (error) {
     return {
