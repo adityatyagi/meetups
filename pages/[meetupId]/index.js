@@ -34,12 +34,10 @@ export async function getStaticPaths() {
     // insert 1 new entry (document)
     const meetups = await meetupsCollection.find({}).toArray();
 
-    console.log("meetups", meetups);
-
     // returns an object / version of the page
     // every object has a params object which holds key-value pairs to route params and their possible values
     return {
-      fallback: false,
+      fallback: "blocking", // NextJS will not respond with a 404 page if it does not find a pre-rendered page immediately for the id requested by user. It will then generate (pre-generate) when needed and cache it. With fallback: true, it will immediatekly return empty page, and then pull down the dynamically geneerated page and then show it. In "blocking", all it does is just shows the pre-generated page once done.
       paths: meetups.map((item) => {
         return {
           params: {
@@ -50,7 +48,7 @@ export async function getStaticPaths() {
     };
   } catch (error) {
     return {
-      fallback: false,
+      fallback: "blocking",
       paths: [],
     };
   }
